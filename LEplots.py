@@ -411,7 +411,7 @@ def imshows(fitsDF, prof_sampDF_lst=None, plot_Fprofile=False, profDF=None, prof
                 
 #                if REF_prof_sampDF_lst is not None
                 xx,yy,yyerr, yBref, stdBref, binCnt = prof_sampDF_lst[i].iloc[ind][['FP_Ac_bin_x','FP_Ac_bin_y','FP_Ac_bin_yerr','FP_Ac_bin_yBref','FP_Ac_bin_ystdBref','FP_Ac_bin_Cnt']].to_list()
-                yy=None
+                # yy=None
                 if yy is not None:
 #                    xy=prof_sampDF_lst[i].iloc[ind]['WrldVec']
 #                    plt.sca(ax_img[ind])

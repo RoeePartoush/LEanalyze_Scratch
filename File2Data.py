@@ -31,7 +31,7 @@ def FitsDiff(diff_flnm):
         print('\n***FitsDiff*** iter. no '+str(ind))
         difDF.at[ind,'filename'] = os.path.basename(diff_flnm[ind])
         print(diff_flnm[ind] + '.fits')
-        Diff_hdu = fits.open(diff_flnm[ind] + '.fits')[0]
+        Diff_hdu = fits.open(diff_flnm[ind])[0]
         difDF.loc[ind]['Diff_HDU'] = Diff_hdu
         difDF.loc[ind]['WCS_w'] = wcs.WCS(Diff_hdu.header)
         try:
@@ -41,11 +41,11 @@ def FitsDiff(diff_flnm):
             # difDF.at[ind,'Noise_mat'] = fits.getdata(diff_flnm[ind] + '.noise.fits')
         except Exception as e:
             print('\n***ERROR:*** '+str(e))
-            difDF.at[ind,'Mask_mat'] = np.zeros(Diff_hdu.data.shape)
-            difDF.at[ind,'Noise_mat'] = np.zeros(Diff_hdu.data.shape)
+            # difDF.at[ind,'Mask_mat'] = np.zeros(Diff_hdu.data.shape)
+            # difDF.at[ind,'Noise_mat'] = np.zeros(Diff_hdu.data.shape)
             pass
         print(ind)
-        difDF.loc[ind]['Idate'] = Diff_hdu.header['MJD-OBS']
+        # difDF.loc[ind]['Idate'] = Diff_hdu.header['MJD-OBS']
         
     difDF = FitsParams(diff_flnm, difDF)
     difDF.insert(difDF.shape[1],'coords_list',[ [] for i in range(len(difDF)) ])
