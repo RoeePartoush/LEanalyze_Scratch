@@ -21,7 +21,7 @@ from scipy import stats
 from astropy import wcs
 SQ = np.squeeze
 
-def FitsDiff(diff_flnm):
+def FitsDiff(diff_flnm, wcs_ext_id=0):
     # diff_flnm = list of strings containing full absolute path EXCEPT extension (without the '.fits')
     
     DFclmn = ['filename','Idate','Tdate','Diff_HDU','Mask_HDU','Mask_mat','Noise_HDU','Noise_mat','FWHM','ZPTMAG','FWHM_ang','M5SIGMA','WCS_w']
@@ -31,7 +31,7 @@ def FitsDiff(diff_flnm):
         print('\n***FitsDiff*** iter. no '+str(ind))
         difDF.at[ind,'filename'] = os.path.basename(diff_flnm[ind])
         print(diff_flnm[ind] + '.fits')
-        Diff_hdu = fits.open(diff_flnm[ind])[0]
+        Diff_hdu = fits.open(diff_flnm[ind])[wcs_ext_id]
         difDF.loc[ind]['Diff_HDU'] = Diff_hdu
         difDF.loc[ind]['WCS_w'] = wcs.WCS(Diff_hdu.header)
         try:

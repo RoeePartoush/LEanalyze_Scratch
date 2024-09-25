@@ -119,6 +119,7 @@ def main():
     parser.add_argument('--out_prof', type=str, default=None, help="Path to the output flux profile file (optional)")
     parser.add_argument('--out_img', type=str, default=None, help="Path to the output file (optional)")
     parser.add_argument('--fit_gmm', type=int, default=None, help="If present, an integer specifiying number of gaussians for profile fit.")
+    parser.add_argument('--wcs_ext', type=int, default=0, help="index of extension in the fits file containing the wcs (default is 0).")
 
     # Parse the arguments
     args = parser.parse_args()
@@ -145,7 +146,7 @@ def main():
             raise FileNotFoundError(f"File not found: {fits_path}")
 
     files = [fits_path]
-    DIFF_df = F2D.FitsDiff(files)
+    DIFF_df = F2D.FitsDiff(files, args.wcs_ext)
 
     clmns = ['Orig', 'PA', 'Length','WIDTH']
     slitFPdf = pd.DataFrame(index=np.arange(len(Orgs)), columns=clmns, data = [(Orgs[i],PA[i],Ln[i],Wd[i]) for i in np.arange(len(Orgs))])
