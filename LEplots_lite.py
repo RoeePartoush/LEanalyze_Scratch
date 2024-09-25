@@ -62,7 +62,7 @@ def imshows(fitsDF, prof_sampDF_lst=None, plot_Fprofile=False, profDF=None, prof
     Zscale = ZScaleInterval()
 
     ax_img = []
-    ax_img2 = []
+    ax_flux = []
     for ind in tqdm(np.arange(len(fitsDF))):
         HDU = fitsDF.iloc[ind]['Diff_HDU']
         w = fitsDF.iloc[ind]['WCS_w'].deepcopy()
@@ -90,10 +90,10 @@ def imshows(fitsDF, prof_sampDF_lst=None, plot_Fprofile=False, profDF=None, prof
                 
                 x=prof_sampDF_lst[i].iloc[ind]['ProjAng']
                 y=prof_sampDF_lst[i].iloc[ind]['FluxProfile_ADU']
-                ax_img2.append(plt.subplot2grid((1,3),(0,1),rowspan=1,colspan=2,fig=fig))
-                plt.sca(ax_img2[ind])
+                ax_flux.append(plt.subplot2grid((1,3),(0,1),rowspan=1,colspan=2,fig=fig))
+                plt.sca(ax_flux[ind])
                 plt.scatter(x.arcsec,y,s=0.5, cmap='jet', label='flux samples')
                 plt.xlabel('[arcsec]')
                 plt.ylabel('flux [ADU]')
                 plt.gca().legend()
-    return ax_img
+    return ax_img, ax_flux
