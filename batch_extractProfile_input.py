@@ -23,6 +23,7 @@ def main():
     parser.add_argument('--regions', action='store_true', help="make a region file of the boxes.")
     parser.add_argument('--reg_color', type=str, default='cyan', help="color for ds9 region file.")
     parser.add_argument('--align_W', action='store_true', help='align boxes along PA in width axis, instead of along RA/Dec')
+    parser.add_argument('--wcs_ext', type=int, default=0, help="index of extension in the fits file containing the wcs (default is 0).")
     
     args = parser.parse_args()
 
@@ -40,6 +41,7 @@ def main():
     regions = args.regions
     reg_color = args.reg_color
     align_W = args.align_W
+    wcs_ext = args.wcs_ext
     
     if not os.path.exists(outdir):
         os.mkdir(outdir)
@@ -82,7 +84,7 @@ icrs
             else:
                 plot_str = ''
             
-            outf.write(f"python extractProfile.py {image} {box_coord.ra.deg:0.7f} {box_coord.dec.deg:0.7f} {PA.value:0.2f} {L.value:0.3f} {W.value:0.3f} --out_prof {out_prof} {plot_str} \n")
+            outf.write(f"python extractProfile.py {image} {box_coord.ra.deg:0.7f} {box_coord.dec.deg:0.7f} {PA.value:0.2f} {L.value:0.3f} {W.value:0.3f} --out_prof {out_prof} {plot_str} --wcs_ext {wcs_ext} \n")
             
             if regions: 
                 regf.write(f"box({box_coord.ra.deg:0.7f},{box_coord.dec.deg:0.7f},{W.value:0.2f}\",{L.value:0.2f}\",{PA.value:0.2f})\n")
